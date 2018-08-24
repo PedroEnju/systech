@@ -102,7 +102,6 @@ type
     Edt_Telefone: TDBEdit;
     Edt_Celular: TDBEdit;
     Edt_CEP: TDBEdit;
-    Edt_DataCadastro: TEdit;
     FDQ_C: TFDQuery;
     FDQ_Cid_cliente: TFDAutoIncField;
     FDQ_Cnome_razaosocial: TStringField;
@@ -158,7 +157,7 @@ type
     Label27: TLabel;
     Edt_ContatoTrabalho: TEdit;
     Label26: TLabel;
-    RG_Genero: TRadioGroup;
+    RG_Sexo: TRadioGroup;
     Edt_NomePai: TEdit;
     Label19: TLabel;
     Label28: TLabel;
@@ -178,10 +177,11 @@ type
     CB_Escolaridade: TComboBox;
     LinkListControlToField2: TLinkListControlToField;
     LinkListControlToField3: TLinkListControlToField;
-    Edt_DataNascimento: TDBEdit;
     Btn_Cidade: TBitBtn;
     Btn_Cargo: TBitBtn;
     Btn_Referencia: TBitBtn;
+    DTP_DataNascimento: TDateTimePicker;
+    DTP_DataCadastro: TDateTimePicker;
     procedure btn_novoClick(Sender: TObject);
     procedure btn_salvarClick(Sender: TObject);
     procedure Edt_DataNascimentoEnter(Sender: TObject);
@@ -272,13 +272,13 @@ begin
   AtivaCampos;
   LimpaCampos;
   Edt_RazaoSocial.SetFocus;
-  Edt_DataCadastro.Text := FormatDateTime('dd/mm/yyyy', Date());
+  DTP_DataCadastro.Date := Date;
   FDQ_ClienteMax.Close;
   FDQ_ClienteMax.Open();
   max := FDQ_ClienteMaxmaxid_cliente.AsInteger + 1;
   Edt_IDCliente.Text := IntToStr(max);
   RG_TipoPessoa.ItemIndex := 0;
-  RG_Genero.ItemIndex := 2;
+  RG_Sexo.ItemIndex := -1;
   RG_Status.ItemIndex := 0;
   FDQCliente.Close;
   FDQCliente.Open();
@@ -309,20 +309,17 @@ var
   status: string;
   tipoPessoa: string;
   genero: string;
-  tmpDate, dataCadastro, tmpDN, dataNascimento: string;
+  dataCadastro, dataNascimento: string;
 begin
   inherited;
-  tmpDate := StringReplace(Edt_DataCadastro.Text, '/', '', [rfReplaceAll]);
-  tmpDN := StringReplace(Edt_DataNascimento.Text, '/', '', [rfReplaceAll]);
-  dataCadastro := (copy(tmpDate, 5, 4) + copy(tmpDate, 3, 2) +
-    copy(tmpDate, 1, 2));
-  dataNascimento := (copy(tmpDN, 5, 4) + copy(tmpDN, 3, 2) + copy(tmpDN, 1, 2));
+  dataCadastro := FormatDateTime('yyyy-mm-dd', DTP_DataCadastro.Date);
+  dataNascimento := FormatDateTime('yyyy-mm-dd', DTP_DataNascimento.Date);
 
   if dataNascimento >= dataCadastro then
   begin
     ShowMessage('Data de Nascimento incorreta!!!');
     Consultar.TabIndex := 1;
-    Edt_DataNascimento.SetFocus;
+    DTP_DataNascimento.SetFocus;
     OptionONE;
     exit;
   end;
@@ -358,17 +355,13 @@ begin
       tipoPessoa := 'J';
     end;
 
-    if (RG_Genero.ItemIndex = 0) then
+    if (RG_Sexo.ItemIndex = 0) then
     begin
       genero := 'F';
     end
-    else if (RG_Genero.ItemIndex = 1) then
+    else if (RG_Sexo.ItemIndex = 1) then
     begin
       genero := 'M';
-    end
-    else
-    begin
-      genero := 'O';
     end;
 
     sql := 'insert into Cliente(' + //
@@ -429,8 +422,8 @@ begin
       Edt_Renda.Text + ',' + //
       QuotedStr(Edt_ContatoTrabalho.Text) + ',' + //
       FDQReferenciaid_referencia.AsString + ',' + //
-      'date(' + dataCadastro + '),' + //
-      'date(' + dataNascimento + '),' + //
+      FormatDateTime('yyyy-mm-dd', DTP_DataCadastro.Date) + ',' + //
+      FormatDateTime('yyyy-mm-dd', DTP_DataNascimento.Date) + ',' + //
       QuotedStr(status) + ',' + //
       QuotedStr(Mm_Obs.Text) + ',' + //
       QuotedStr(Edt_Autorizacoes.Text) + ',' + //
@@ -462,17 +455,13 @@ begin
       tipoPessoa := 'J';
     end;
 
-    if (RG_Genero.ItemIndex = 0) then
+    if (RG_Sexo.ItemIndex = 0) then
     begin
       genero := 'F';
     end
-    else if (RG_Genero.ItemIndex = 1) then
+    else if (RG_Sexo.ItemIndex = 1) then
     begin
       genero := 'M';
-    end
-    else
-    begin
-      genero := 'O';
     end;
 
     sql := 'update Cliente set ' + //
@@ -598,15 +587,11 @@ begin
 
   if (FDQ_Cgenero.AsString = 'F') then
   begin
-    RG_Genero.ItemIndex := 0;
+    RG_Sexo.ItemIndex := 0;
   end
   else if (FDQ_Cgenero.AsString = 'M') then
   begin
-    RG_Genero.ItemIndex := 1;
-  end
-  else
-  begin
-    RG_Genero.ItemIndex := 2;
+    RG_Sexo.ItemIndex := 1;
   end;
 
   FDQCargo.Close;
@@ -621,7 +606,7 @@ begin
   Edt_Autorizacoes.Text := FDQ_Cautorizacoes.AsString;
   Edt_ValorMaxCred.Text := FDQ_Cvalormaxcred.AsString;
   Edt_IDCliente.Text := FDQ_Cid_cliente.AsString;
-  Edt_DataCadastro.Text := FDQ_Cdatadecadastro.AsString;
+  DTP_DataCadastro.Date := FDQ_Cdatadecadastro.AsDateTime;
   Edt_RazaoSocial.Text := FDQ_Cnome_razaosocial.AsString;
   Edt_Endereco.Text := FDQ_Cendereco.AsString;
   Edt_Numero.Text := FDQ_Cnumero.AsString;
@@ -637,7 +622,7 @@ begin
   Mm_Obs.Text := FDQ_Cobservacao.AsString;
   Edt_LocalTrabalho.Text := FDQ_Clocaldetrabalho.AsString;
   Edt_Renda.Text := FDQ_Crenda.AsString;
-  Edt_DataNascimento.Text := FDQ_Cdatanascimento.AsString;
+  DTP_DataNascimento.Date := FDQ_Cdatanascimento.AsDateTime;
   Edt_NomePai.Text := FDQ_Cnomepai.AsString;
   Edt_NomeMae.Text := FDQ_Cnomemae.AsString;
   Edt_ContatoTrabalho.Text := FDQ_Ccontatotrabalho.AsString;
@@ -658,7 +643,7 @@ end;
 procedure TF_Cliente.Edt_DataNascimentoEnter(Sender: TObject);
 begin
   inherited;
-  Edt_DataNascimento.Text := EmptyStr;
+  DTP_DataNascimento.Date := Date;
 end;
 
 procedure TF_Cliente.Edt_RendaEnter(Sender: TObject);
@@ -689,6 +674,7 @@ begin
   btn_salvar.Enabled := False;
   btn_cancelar.Enabled := False;
   btn_sair.Enabled := true;
+
 end;
 
 procedure TF_Cliente.AtivaCampos;
@@ -726,8 +712,8 @@ begin
   Edt_Celular.Text := EmptyStr;
   Edt_CPFCNPJ.Text := EmptyStr;
   Edt_CEP.Text := EmptyStr;
-  Edt_DataCadastro.Text := EmptyStr;
-  Edt_DataNascimento.Text := EmptyStr;
+  DTP_DataCadastro.Date := Date;
+  DTP_DataNascimento.Date := Date;
   CB_Cidade.Text := EmptyStr;
   CB_EstadoCivil.Text := EmptyStr;
   CB_Escolaridade.Text := EmptyStr;
@@ -735,7 +721,7 @@ begin
   CB_Referencia.Text := EmptyStr;
   RG_TipoPessoa.ItemIndex := 0;
   RG_Status.ItemIndex := 0;
-  RG_Genero.ItemIndex := 2;
+  RG_Sexo.ItemIndex := -1;
 end;
 
 procedure TF_Cliente.OptionONE;

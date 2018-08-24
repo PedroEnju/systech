@@ -241,7 +241,9 @@ inherited F_Cliente: TF_Cliente
     inherited TabSheet2: TTabSheet
       Enabled = False
       ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 884
+      ExplicitHeight = 414
       object Label2: TLabel
         Left = 3
         Top = 1
@@ -404,7 +406,7 @@ inherited F_Cliente: TF_Cliente
         Caption = 'Nome Pai.:'
       end
       object Label28: TLabel
-        Left = 500
+        Left = 492
         Top = 3
         Width = 89
         Height = 13
@@ -466,7 +468,7 @@ inherited F_Cliente: TF_Cliente
         Height = 21
         Alignment = taRightJustify
         Enabled = False
-        TabOrder = 29
+        TabOrder = 30
       end
       object RG_TipoPessoa: TRadioGroup
         Left = 3
@@ -478,13 +480,13 @@ inherited F_Cliente: TF_Cliente
         Items.Strings = (
           'F'#237'sica'
           'Jur'#237'dica')
-        TabOrder = 3
+        TabOrder = 4
         OnClick = RG_TipoPessoaClick
       end
       object Edt_RazaoSocial: TEdit
         Left = 130
         Top = 20
-        Width = 364
+        Width = 356
         Height = 21
         CharCase = ecUpperCase
         MaxLength = 60
@@ -496,7 +498,7 @@ inherited F_Cliente: TF_Cliente
         Width = 364
         Height = 21
         MaxLength = 60
-        TabOrder = 20
+        TabOrder = 21
       end
       object Edt_Numero: TEdit
         Left = 3
@@ -505,7 +507,7 @@ inherited F_Cliente: TF_Cliente
         Height = 21
         Alignment = taRightJustify
         MaxLength = 10
-        TabOrder = 21
+        TabOrder = 22
       end
       object Edt_Bairro: TEdit
         Left = 3
@@ -513,7 +515,7 @@ inherited F_Cliente: TF_Cliente
         Width = 364
         Height = 21
         MaxLength = 30
-        TabOrder = 23
+        TabOrder = 24
       end
       object Edt_Complemento: TEdit
         Left = 97
@@ -521,7 +523,7 @@ inherited F_Cliente: TF_Cliente
         Width = 270
         Height = 21
         MaxLength = 45
-        TabOrder = 22
+        TabOrder = 23
       end
       object CB_Cidade: TComboBox
         Left = 516
@@ -529,7 +531,7 @@ inherited F_Cliente: TF_Cliente
         Width = 98
         Height = 21
         MaxLength = 30
-        TabOrder = 26
+        TabOrder = 27
         OnEnter = CB_CidadeEnter
       end
       object Edt_Pais: TEdit
@@ -538,7 +540,7 @@ inherited F_Cliente: TF_Cliente
         Width = 149
         Height = 21
         MaxLength = 20
-        TabOrder = 27
+        TabOrder = 28
       end
       object Edt_Email: TEdit
         Left = 3
@@ -547,7 +549,7 @@ inherited F_Cliente: TF_Cliente
         Height = 21
         CharCase = ecLowerCase
         MaxLength = 45
-        TabOrder = 24
+        TabOrder = 25
       end
       object RG_Status: TRadioGroup
         Left = 3
@@ -559,14 +561,14 @@ inherited F_Cliente: TF_Cliente
         Items.Strings = (
           'Ativo'
           'Inativo')
-        TabOrder = 30
+        TabOrder = 31
       end
       object Mm_Obs: TMemo
         Left = 373
         Top = 298
         Width = 501
         Height = 113
-        TabOrder = 28
+        TabOrder = 29
       end
       object Edt_UF: TEdit
         Left = 652
@@ -575,7 +577,7 @@ inherited F_Cliente: TF_Cliente
         Height = 21
         Enabled = False
         MaxLength = 2
-        TabOrder = 31
+        TabOrder = 32
       end
       object Edt_Telefone: TDBEdit
         Left = 595
@@ -584,7 +586,7 @@ inherited F_Cliente: TF_Cliente
         Height = 21
         DataField = 'telefone'
         DataSource = DS_Cliente
-        TabOrder = 1
+        TabOrder = 2
       end
       object Edt_Celular: TDBEdit
         Left = 725
@@ -593,7 +595,7 @@ inherited F_Cliente: TF_Cliente
         Height = 21
         DataField = 'celular'
         DataSource = DS_Cliente
-        TabOrder = 2
+        TabOrder = 3
       end
       object Edt_CEP: TDBEdit
         Left = 373
@@ -602,15 +604,7 @@ inherited F_Cliente: TF_Cliente
         Height = 21
         DataField = 'cep'
         DataSource = DS_Cliente
-        TabOrder = 25
-      end
-      object Edt_DataCadastro: TEdit
-        Left = 3
-        Top = 133
-        Width = 121
-        Height = 21
-        Enabled = False
-        TabOrder = 32
+        TabOrder = 26
       end
       object Edt_CPFCNPJ: TDBEdit
         Left = 130
@@ -619,7 +613,7 @@ inherited F_Cliente: TF_Cliente
         Height = 21
         DataField = 'cpf_cnpj'
         DataSource = DS_Cliente
-        TabOrder = 4
+        TabOrder = 5
       end
       object Edt_RGIE: TEdit
         Left = 130
@@ -627,7 +621,7 @@ inherited F_Cliente: TF_Cliente
         Width = 180
         Height = 21
         MaxLength = 15
-        TabOrder = 8
+        TabOrder = 9
       end
       object Edt_LocalTrabalho: TEdit
         Left = 130
@@ -635,7 +629,7 @@ inherited F_Cliente: TF_Cliente
         Width = 269
         Height = 21
         MaxLength = 45
-        TabOrder = 11
+        TabOrder = 12
       end
       object CB_Cargo: TComboBox
         Left = 130
@@ -643,7 +637,7 @@ inherited F_Cliente: TF_Cliente
         Width = 106
         Height = 21
         MaxLength = 20
-        TabOrder = 15
+        TabOrder = 16
         OnEnter = CB_CargoEnter
       end
       object Edt_Renda: TEdit
@@ -652,7 +646,7 @@ inherited F_Cliente: TF_Cliente
         Width = 125
         Height = 21
         Alignment = taRightJustify
-        TabOrder = 16
+        TabOrder = 17
         Text = '0'
         OnEnter = Edt_RendaEnter
       end
@@ -662,7 +656,7 @@ inherited F_Cliente: TF_Cliente
         Width = 113
         Height = 21
         MaxLength = 20
-        TabOrder = 17
+        TabOrder = 18
         OnEnter = CB_ReferenciaEnter
       end
       object Edt_ContatoTrabalho: TEdit
@@ -671,20 +665,18 @@ inherited F_Cliente: TF_Cliente
         Width = 145
         Height = 21
         MaxLength = 30
-        TabOrder = 12
+        TabOrder = 13
       end
-      object RG_Genero: TRadioGroup
+      object RG_Sexo: TRadioGroup
         Left = 316
         Top = 56
         Width = 101
         Height = 77
-        Caption = 'G'#234'nero.:'
-        ItemIndex = 2
+        Caption = 'Sexo.:'
         Items.Strings = (
           'Feminino'
-          'Masculino'
-          'N'#227'o Informado')
-        TabOrder = 5
+          'Masculino')
+        TabOrder = 6
       end
       object Edt_NomePai: TEdit
         Left = 535
@@ -692,7 +684,7 @@ inherited F_Cliente: TF_Cliente
         Width = 339
         Height = 21
         MaxLength = 45
-        TabOrder = 7
+        TabOrder = 8
       end
       object Edt_NomeMae: TEdit
         Left = 632
@@ -700,7 +692,7 @@ inherited F_Cliente: TF_Cliente
         Width = 242
         Height = 21
         MaxLength = 45
-        TabOrder = 10
+        TabOrder = 11
       end
       object Edt_Naturalidade: TEdit
         Left = 710
@@ -708,7 +700,7 @@ inherited F_Cliente: TF_Cliente
         Width = 164
         Height = 21
         MaxLength = 45
-        TabOrder = 14
+        TabOrder = 15
       end
       object Edt_ValorMaxCred: TEdit
         Left = 710
@@ -716,7 +708,7 @@ inherited F_Cliente: TF_Cliente
         Width = 164
         Height = 21
         Alignment = taRightJustify
-        TabOrder = 19
+        TabOrder = 20
         Text = '0'
         OnEnter = Edt_ValorMaxCredEnter
       end
@@ -726,7 +718,7 @@ inherited F_Cliente: TF_Cliente
         Width = 148
         Height = 21
         MaxLength = 45
-        TabOrder = 18
+        TabOrder = 19
       end
       object Edt_Nacionalidade: TEdit
         Left = 556
@@ -734,7 +726,7 @@ inherited F_Cliente: TF_Cliente
         Width = 148
         Height = 21
         MaxLength = 45
-        TabOrder = 13
+        TabOrder = 14
       end
       object CB_EstadoCivil: TComboBox
         Left = 423
@@ -742,7 +734,7 @@ inherited F_Cliente: TF_Cliente
         Width = 106
         Height = 21
         MaxLength = 5
-        TabOrder = 6
+        TabOrder = 7
         OnEnter = CB_EstadoCivilEnter
       end
       object CB_Escolaridade: TComboBox
@@ -751,17 +743,8 @@ inherited F_Cliente: TF_Cliente
         Width = 203
         Height = 21
         MaxLength = 20
-        TabOrder = 9
+        TabOrder = 10
         OnEnter = CB_EscolaridadeEnter
-      end
-      object Edt_DataNascimento: TDBEdit
-        Left = 500
-        Top = 20
-        Width = 89
-        Height = 21
-        DataField = 'datanascimento'
-        DataSource = DS_Cliente
-        TabOrder = 33
       end
       object Btn_Cidade: TBitBtn
         Left = 620
@@ -782,7 +765,7 @@ inherited F_Cliente: TF_Cliente
           B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
           3BB33773333773333773B333333B3333333B7333333733333337}
         NumGlyphs = 2
-        TabOrder = 34
+        TabOrder = 33
         OnClick = Btn_CidadeClick
       end
       object Btn_Cargo: TBitBtn
@@ -804,7 +787,7 @@ inherited F_Cliente: TF_Cliente
           B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
           3BB33773333773333773B333333B3333333B7333333733333337}
         NumGlyphs = 2
-        TabOrder = 35
+        TabOrder = 34
         OnClick = Btn_CargoClick
       end
       object Btn_Referencia: TBitBtn
@@ -826,8 +809,27 @@ inherited F_Cliente: TF_Cliente
           B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
           3BB33773333773333773B333333B3333333B7333333733333337}
         NumGlyphs = 2
-        TabOrder = 36
+        TabOrder = 35
         OnClick = Btn_ReferenciaClick
+      end
+      object DTP_DataNascimento: TDateTimePicker
+        Left = 492
+        Top = 20
+        Width = 97
+        Height = 21
+        Date = 36486.706857546300000000
+        Time = 36486.706857546300000000
+        TabOrder = 1
+      end
+      object DTP_DataCadastro: TDateTimePicker
+        Left = 3
+        Top = 131
+        Width = 121
+        Height = 21
+        Date = 36486.707559351850000000
+        Time = 36486.707559351850000000
+        Enabled = False
+        TabOrder = 36
       end
     end
   end

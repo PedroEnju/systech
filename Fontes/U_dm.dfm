@@ -6,7 +6,7 @@ object DM: TDM
     Params.Strings = (
       'Database=Systech'
       'User_Name=root'
-      'Password=root'
+      'Password=enju'
       'Server=127.0.0.1'
       'DriverID=MySQL')
     LoginPrompt = False
