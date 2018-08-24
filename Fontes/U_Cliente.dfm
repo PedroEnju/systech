@@ -736,6 +736,14 @@ inherited F_Cliente: TF_Cliente
         MaxLength = 5
         TabOrder = 7
         OnEnter = CB_EstadoCivilEnter
+        Items.Strings = (
+          'N'#227'o Informado'
+          'Solteira(o)'
+          'Casada(o)'
+          'Separada(o)'
+          'Divorciado(o)'
+          'Vi'#250'va(o)'
+          'Uni'#227'o Est'#225'vel')
       end
       object CB_Escolaridade: TComboBox
         Left = 423
@@ -830,6 +838,13 @@ inherited F_Cliente: TF_Cliente
         Time = 36486.707559351850000000
         Enabled = False
         TabOrder = 36
+      end
+      object Memo1: TMemo
+        Left = 423
+        Top = 312
+        Width = 185
+        Height = 89
+        TabOrder = 37
       end
     end
   end

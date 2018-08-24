@@ -1,5 +1,5 @@
 unit U_Cliente;
-
+
 interface
 
 uses
@@ -182,6 +182,7 @@ type
     Btn_Referencia: TBitBtn;
     DTP_DataNascimento: TDateTimePicker;
     DTP_DataCadastro: TDateTimePicker;
+    Memo1: TMemo;
     procedure btn_novoClick(Sender: TObject);
     procedure btn_salvarClick(Sender: TObject);
     procedure Edt_DataNascimentoEnter(Sender: TObject);
@@ -310,10 +311,11 @@ var
   tipoPessoa: string;
   genero: string;
   dataCadastro, dataNascimento: string;
+  cargo, referencia: string;
 begin
   inherited;
-  dataCadastro := FormatDateTime('yyyy-mm-dd', DTP_DataCadastro.Date);
-  dataNascimento := FormatDateTime('yyyy-mm-dd', DTP_DataNascimento.Date);
+  dataCadastro := FormatDateTime('ddmmyyyy', DTP_DataCadastro.Date);
+  dataNascimento := FormatDateTime('ddmmyyyy', DTP_DataNascimento.Date);
 
   if dataNascimento >= dataCadastro then
   begin
@@ -333,9 +335,17 @@ begin
   end
   else if (Edt_RazaoSocial.Text = '') then
   begin
-    ShowMessage('O campo NOME não pode ser em branco');
+    ShowMessage('O campo NOME não pode ser em branco!!!');
     Consultar.TabIndex := 1;
     Edt_RazaoSocial.SetFocus;
+    OptionONE;
+    exit;
+  end
+  else if (CB_Cidade.Text = 'Escolha uma Cidade') then
+  begin
+    ShowMessage('Cidade não pode ser em branco!!!');
+    Consultar.TabIndex := 1;
+    CB_Cidade.SetFocus;
     OptionONE;
     exit;
   end
@@ -363,6 +373,25 @@ begin
     begin
       genero := 'M';
     end;
+
+    if (CB_Cargo.Text = 'Escolha um Cargo') then
+      CB_Cargo.Text := EmptyStr;
+    if (CB_Referencia.Text = 'Escolha uma Referência') then
+      CB_Referencia.Text := EmptyStr;
+    if (CB_EstadoCivil.Text = 'Escolha um Estado Civil') then
+      CB_EstadoCivil.ItemIndex := 0;
+    if (CB_Escolaridade.Text = 'Escolha um Grau de Escolaridade') then
+      CB_Escolaridade.Text := EmptyStr;
+
+    if CB_Cargo.Text = '' then
+      cargo := '1'
+    else
+      cargo := FDQCargoid_cargo.AsString;
+
+    if CB_Referencia.Text = '' then
+      referencia := '1'
+    else
+      referencia := FDQReferenciaid_referencia.AsString;
 
     sql := 'insert into Cliente(' + //
       'nome_razaosocial,' + //
@@ -415,15 +444,17 @@ begin
       QuotedStr(Edt_NomePai.Text) + ',' + //
       QuotedStr(Edt_NomeMae.Text) + ',' + //
       QuotedStr(genero) + ',' + //
-      QuotedStr(CB_EstadoCivil.Text) + ',' + //
+      QuotedStr(IntToStr(CB_EstadoCivil.ItemIndex + 1)) + ',' + //
       QuotedStr(CB_Escolaridade.Text) + ',' + //
       QuotedStr(Edt_LocalTrabalho.Text) + ',' + //
-      FDQCargoid_cargo.AsString + ',' + //
+      cargo + ',' + //
       Edt_Renda.Text + ',' + //
       QuotedStr(Edt_ContatoTrabalho.Text) + ',' + //
-      FDQReferenciaid_referencia.AsString + ',' + //
-      FormatDateTime('yyyy-mm-dd', DTP_DataCadastro.Date) + ',' + //
-      FormatDateTime('yyyy-mm-dd', DTP_DataNascimento.Date) + ',' + //
+      referencia + ',' + //
+      QuotedStr(FormatDateTime('yyyy-mm-dd', DTP_DataCadastro.Date)) + ',' +
+    //
+      QuotedStr(FormatDateTime('yyyy-mm-dd', DTP_DataNascimento.Date)) + ',' +
+    //
       QuotedStr(status) + ',' + //
       QuotedStr(Mm_Obs.Text) + ',' + //
       QuotedStr(Edt_Autorizacoes.Text) + ',' + //
@@ -464,6 +495,11 @@ begin
       genero := 'M';
     end;
 
+    if CB_Cargo.Text = '' then
+      cargo := '1'
+    else
+      cargo := FDQCargoid_cargo.AsString;
+
     sql := 'update Cliente set ' + //
       'nome_razaosocial = ' + QuotedStr(Edt_RazaoSocial.Text) + //
       ',tipopessoa = ' + QuotedStr(tipoPessoa) + //
@@ -482,14 +518,15 @@ begin
       ',nomepai = ' + QuotedStr(Edt_NomePai.Text) + //
       ',nomemae = ' + QuotedStr(Edt_NomeMae.Text) + //
       ',genero = ' + QuotedStr(genero) + //
-      ',estadocivil = ' + QuotedStr(CB_EstadoCivil.Text) + //
+      ',estadocivil = ' + QuotedStr(IntToStr(CB_EstadoCivil.ItemIndex)) + //
       ',grauescolaridade = ' + QuotedStr(CB_Escolaridade.Text) + //
       ',localdetrabalho = ' + QuotedStr(Edt_LocalTrabalho.Text) + //
-      ',id_cargo = ' + FDQCargoid_cargo.AsString + //
+      ',id_cargo = ' + cargo + //
       ',renda = ' + Edt_Renda.Text + //
       ',contatotrabalho = ' + QuotedStr(Edt_ContatoTrabalho.Text) + //
       ',id_referencia = ' + FDQReferenciaid_referencia.AsString + //
-      ',datanascimento = ' + 'date(' + dataNascimento + ')' + //
+      ',datanascimento = ' + QuotedStr(FormatDateTime('yyyy-mm-dd',
+      DTP_DataNascimento.Date)) + //
       ',status = ' + QuotedStr(status) + //
       ',observacao = ' + QuotedStr(Mm_Obs.Text) + //
       ',autorizacoes = ' + QuotedStr(Edt_Autorizacoes.Text) + //
@@ -628,8 +665,9 @@ begin
   Edt_ContatoTrabalho.Text := FDQ_Ccontatotrabalho.AsString;
   Edt_Nacionalidade.Text := FDQ_Cnacionalidade.AsString;
   Edt_Naturalidade.Text := FDQ_Cnaturalidade.AsString;
-  CB_EstadoCivil.Text := FDQ_Cestadocivil.AsString;
+  CB_EstadoCivil.ItemIndex := FDQ_Cestadocivil.AsInteger;
   CB_Escolaridade.Text := FDQ_Cgrauescolaridade.AsString;
+
 end;
 
 procedure TF_Cliente.EdtPesquisarExit(Sender: TObject);
@@ -701,13 +739,13 @@ begin
   Edt_NomePai.Text := EmptyStr;
   Edt_NomeMae.Text := EmptyStr;
   Edt_LocalTrabalho.Text := EmptyStr;
-  Edt_Renda.Text := EmptyStr;
+  Edt_Renda.Text := '0';
   Edt_ContatoTrabalho.Text := EmptyStr;
   Edt_UF.Text := EmptyStr;
   Edt_Nacionalidade.Text := EmptyStr;
   Edt_Naturalidade.Text := EmptyStr;
   Edt_Autorizacoes.Text := EmptyStr;
-  Edt_ValorMaxCred.Text := EmptyStr;
+  Edt_ValorMaxCred.Text := '0';
   Edt_Telefone.Text := EmptyStr;
   Edt_Celular.Text := EmptyStr;
   Edt_CPFCNPJ.Text := EmptyStr;
@@ -715,10 +753,10 @@ begin
   DTP_DataCadastro.Date := Date;
   DTP_DataNascimento.Date := Date;
   CB_Cidade.Text := EmptyStr;
-  CB_EstadoCivil.Text := EmptyStr;
   CB_Escolaridade.Text := EmptyStr;
   CB_Cargo.Text := EmptyStr;
-  CB_Referencia.Text := EmptyStr;
+  CB_Referencia.Text := EmptyStr;  
+  CB_EstadoCivil.ItemIndex := -1;
   RG_TipoPessoa.ItemIndex := 0;
   RG_Status.ItemIndex := 0;
   RG_Sexo.ItemIndex := -1;
@@ -743,3 +781,4 @@ begin
 end;
 
 end.
+

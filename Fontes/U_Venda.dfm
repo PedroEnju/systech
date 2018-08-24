@@ -1,7 +1,6 @@
 inherited F_Venda: TF_Venda
   Caption = 'Systech - Venda'
   OnShow = FormShow
-  ExplicitLeft = -11
   ExplicitWidth = 908
   ExplicitHeight = 544
   PixelsPerInch = 96
@@ -1298,7 +1297,7 @@ inherited F_Venda: TF_Venda
   object FDQ_Usuario: TFDQuery
     Connection = DM.FD_Conexao
     SQL.Strings = (
-      'select * from usuario where venda = '#39'S'#39';')
+      'select * from usuario where venda = '#39'Y'#39';')
     Left = 388
     Top = 143
     object FDQ_Usuarioid_usuario: TFDAutoIncField

@@ -440,15 +440,16 @@ end;
 procedure TF_Venda.FormShow(Sender: TObject);
 begin
   inherited;
+  Consultar.TabIndex := 0;
   DataToday;
   LimpaCampos;
   DesativaCampos;
 
-  btn_novo.Enabled := true;
+  btn_novo.Enabled := True;
   btn_editar.Enabled := False;
   btn_salvar.Enabled := False;
   btn_cancelar.Enabled := False;
-  btn_sair.Enabled := true;
+  btn_sair.Enabled := True;
 end;
 
 procedure TF_Venda.LimpaCampos;
